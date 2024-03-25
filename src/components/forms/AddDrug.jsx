@@ -44,7 +44,7 @@ const AddDrug = () => {
             }
             if (!manufacturerId === "None") data[manufacturerId] = manufacturerId
             if (!barcodeMode) delete data.barcode_no
-            const response = await axios.post(`${API_URL}drug/add`, data);
+            const response = await axios.post(`${API_URL}/drug/add`, data);
             isSubmitting(false)
             setBarcode("")
             setBarcodeMode(false)
