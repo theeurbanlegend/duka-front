@@ -35,7 +35,7 @@ const TransactionTable = ({ txns }) => {
                   <td className="py-4 px-6">
                     {txn.tx_details.map((detail, index) => (
                       <span key={index}>
-                        {detail.stock_out}
+                        {detail.stock_in-detail.stock_out}
                         {index < txn.tx_details.length - 1 && ', '}
                       </span>
                     ))}
