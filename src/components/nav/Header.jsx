@@ -4,11 +4,11 @@ import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-    const { currentChild ,setinvModalHidden, setsupModalHidden, setRefresh1, setRefresh2} = useContext(childContext);
+    const { active ,setinvModalHidden, setsupModalHidden, setRefresh1, setRefresh2} = useContext(childContext);
     const navigate=useNavigate()
     const [currentDate, setCurrentDate] = useState(new Date().toLocaleTimeString());
     let header = "Dashboard"
-    switch (currentChild.type.name) {
+    switch (active) {
         case "Inventory":
             header=(<>
             <Button text={"Add To Inventory"} color={"blue"} handleClick={()=>setinvModalHidden(false)}/>

@@ -14,6 +14,7 @@ export const childContext = createContext()
 
 function App() {
   const [currentChild, setCurrentChild] = useState(<Dashboard />)
+  const [active, setActive]=useState("Dashboard")
   const [invModalHidden, setinvModalHidden] = useState(true)
   const [supModalHidden, setsupModalHidden] = useState(true)
   const [refresh1, setRefresh1]=useState(false)
@@ -21,7 +22,7 @@ function App() {
   const [session, setSession] = useState(null)
   const [drugList, setDrugList]=useState([])
   return (
-    <childContext.Provider value={{ currentChild, setCurrentChild, invModalHidden, setinvModalHidden, supModalHidden, setsupModalHidden, session, setSession , refresh1, setRefresh1, refresh2, setRefresh2, drugList, setDrugList}}>
+    <childContext.Provider value={{ active, setActive, currentChild, setCurrentChild, invModalHidden, setinvModalHidden, supModalHidden, setsupModalHidden, session, setSession , refresh1, setRefresh1, refresh2, setRefresh2, drugList, setDrugList}}>
       <Router>
         <Routes>
         <Route path='*' element={<LoginForm />} />
