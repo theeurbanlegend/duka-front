@@ -3,14 +3,14 @@ import SuppliersTable from '../tables/SuppliersTable'
 import { childContext } from '../../App'
 import AddSupplier from '../forms/AddSupplier'
 import axios from 'axios'
+import { API_URL } from '../../config/config'
 
 const Suppliers = () => {
   const {supModalHidden, refresh2}=useContext(childContext)
   const [suppliers, setSuppliers]=useState(null)
-  const API_ENDPOINT="http://localhost:3000"
   useEffect(()=>{
     async function getSuppliers(){
-      const res=await axios.get(`${API_ENDPOINT}/manufacturer/all`)
+      const res=await axios.get(`${API_URL}/manufacturer/all`)
       setSuppliers(res.data)
     }
     getSuppliers()

@@ -3,13 +3,14 @@ import { childContext } from '../../App';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { API_URL } from '../../config/config';
 
 const AddSupplier = () => {
     const {setsupModalHidden}=useContext(childContext)
     const [manufacturerName, setManufacturerName] = useState("")
     const [manufacturerPhone, setManufacturerPhone] = useState("")
     const [submitting, isSubmitting]=useState(false)
-    const API_ENDPOINT="http://localhost:3000"
+    
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,7 +20,7 @@ const AddSupplier = () => {
                 man_name:manufacturerName,
                 man_phone:manufacturerPhone
             }
-            const response = await axios.post(`${API_ENDPOINT}/manufacturer/add`, data);
+            const response = await axios.post(`${API_URL}/manufacturer/add`, data);
             setManufacturerName('')
             setManufacturerPhone("")
             isSubmitting(false)

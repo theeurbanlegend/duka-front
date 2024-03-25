@@ -7,9 +7,9 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import CheckoutList from "../checkout/CheckoutList";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../config/config";
 
 const CheckoutForm = () => {
-  const API_ENDPOINT = "http://localhost:3000"
   const [checkoutCardList, setCheckoutCardList] = useState([]);
   const navigate=useNavigate()
   const [unitTotal, setunitTotal] = useState(0)
@@ -43,7 +43,7 @@ const CheckoutForm = () => {
     }
 
     try {
-      const res = await axios.post(`${API_ENDPOINT}/drug/checkout`, data)
+      const res = await axios.post(`${API_URL}/drug/checkout`, data)
       console.log(res.data)
       setCheckoutCardList([])
       setDrugSelected(null)

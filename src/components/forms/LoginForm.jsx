@@ -2,11 +2,9 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { childContext } from '../../App';
+import { API_URL } from '../../config/config';
 
 const LoginForm = () => {
-
-    const API_ENDPOINT="http://localhost:3000"
-    //const API_ENDPOINT = "https://9959mgp3-3000.euw.devtunnels.ms/"
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
 	const [persist, setPersist]=useState(false)
@@ -17,7 +15,7 @@ const LoginForm = () => {
 		isSubmitting(true)
         e.preventDefault();
         try {
-            const response = await axios.post(`${API_ENDPOINT}/user/login`, { phone:phoneNumber, password });
+            const response = await axios.post(`${API_URL}/user/login`, { phone:phoneNumber, password });
             
 			if (persist) localStorage.setItem(Object.keys(response.data), Object.values(response.data))
 			setSession(Object.values(response.data))

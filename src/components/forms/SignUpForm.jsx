@@ -2,11 +2,9 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { childContext } from '../../App';
+import { API_URL } from '../../config/config';
 
 const SignUpForm = () => {
-
-    const API_ENDPOINT="http://localhost:3000"
-    //const API_ENDPOINT = "https://9959mgp3-3000.euw.devtunnels.ms/"
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
@@ -18,7 +16,7 @@ const SignUpForm = () => {
 		isSubmitting(true)
         e.preventDefault();
         try {
-            const response = await axios.post(`${API_ENDPOINT}/user/register`, { name, phone:phoneNumber, password });
+            const response = await axios.post(`${API_URL}/user/register`, { name, phone:phoneNumber, password });
             // Handle successful sign-up response
 			if (persist) localStorage.setItem(Object.keys(response.data), Object.values(response.data))
 			isSubmitting(false)

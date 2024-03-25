@@ -4,9 +4,8 @@ import StockCard from './StockCard'
 import ProfitCard from './ProfitCard'
 import StockLevelCard from './StockLevelCard'
 import axios from 'axios'
-
+import { API_URL } from '../../config/config'
 const Dashboard = () => {
-  const API_ENDPOINT = "http://localhost:3000"
   const [totalSales, setTotalSales] = useState(0)
   const [salesChange, setSalesChange] = useState(0)
   const [totalStock, setTotalStock] = useState(0)
@@ -19,14 +18,14 @@ const Dashboard = () => {
         let salesTotal = 0
         let profitTotal = 0
 
-        const itemsRes = await axios.get(`${API_ENDPOINT}/drug/all`)
+        const itemsRes = await axios.get(`${API_URL}/drug/all`)
         const items = itemsRes.data
 
         // Calculate total stock
         const stockSum = items.reduce((acc, item) => acc + item.in_stock, 0)
         setTotalStock(stockSum)
 
-        const res = await axios.get(`${API_ENDPOINT}/drug/txns/all`)
+        const res = await axios.get(`${API_URL}/drug/txns/all`)
         const allTxns = res.data
         if (allTxns.length > 0) {
 

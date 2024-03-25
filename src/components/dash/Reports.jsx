@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import TransactionTable from '../tables/TransactionTable'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { API_URL } from '../../config/config'
 
 const Reports = () => {
   const [txns, setTxns] = useState(null)
-  const API_ENDPOINT = "http://localhost:3000"
   useEffect(() => {
     async function getTxns() {
       try {
-      const res = await axios.get(`${API_ENDPOINT}/drug/txns/all`);
+      const res = await axios.get(`${API_URL}/drug/txns/all`);
       console.log(res)
       setTxns(res.data)
       toast.success("Success!", {

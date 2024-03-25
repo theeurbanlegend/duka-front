@@ -5,13 +5,12 @@ import { childContext } from '../../App';
 import axios from 'axios';
 import io from 'socket.io-client'
 import { toast } from 'react-hot-toast';
+import { API_URL } from '../../config/config';
 
 const AddDrug = () => {
-    //const API_ENDPOINT="http://localhost:3000/"
-    const API_ENDPOINT = "https://9959mgp3-3000.euw.devtunnels.ms/"
     const { setinvModalHidden , setRefresh1} = useContext(childContext)
     const [barcode, setBarcode] = useState('')
-    const socket = io(API_ENDPOINT)
+    const socket = io(API_URL)
     const [barcodeMode, setBarcodeMode] = useState(false)
     const [barcodeDetails, setbarcodeDetails] = useState([])
     const [receivedBarcode, hasReceivedBarcode] = useState(false)
@@ -45,7 +44,7 @@ const AddDrug = () => {
             }
             if (!manufacturerId === "None") data[manufacturerId] = manufacturerId
             if (!barcodeMode) delete data.barcode_no
-            const response = await axios.post(`${API_ENDPOINT}drug/add`, data);
+            const response = await axios.post(`${API_URL}drug/add`, data);
             isSubmitting(false)
             setBarcode("")
             setBarcodeMode(false)

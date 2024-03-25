@@ -4,14 +4,14 @@ import AddDrug from '../forms/AddDrug'
 import { childContext } from '../../App'
 import axios from 'axios'
 import { toast} from 'react-hot-toast';
+import { API_URL } from '../../config/config'
 
 const Inventory = () => {
   const { invModalHidden, refresh1 , setDrugList} = useContext(childContext)
   const [drugs, setDrugs] = useState(null)
-  const API_ENDPOINT = "http://localhost:3000"
   useEffect(() => {
     async function getDrugs() {try {
-      const res = await axios.get(`${API_ENDPOINT}/drug/all`);
+      const res = await axios.get(`${API_URL}/drug/all`);
       // Handle successful response
       setDrugs(res.data)
       setDrugList(res.data)
