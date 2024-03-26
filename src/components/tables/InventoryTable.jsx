@@ -37,7 +37,7 @@ const InventoryTable = ({drugs}) => {
                       </div>
                     </td>
                     <td className="p-3 pr-0 text-end">
-                      <span className="font-semibold text-light-inverse text-md/normal">Coming soon!</span>
+                      <span className="font-semibold text-light-inverse text-md/normal">{drug.manufacturer_id.man_name}</span>
                     </td>
                     <td className="p-3 pr-0 text-end">
                       <span className="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">

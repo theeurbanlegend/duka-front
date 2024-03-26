@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 import { API_URL } from '../../config/config';
 
 const AddDrug = () => {
-    const { setinvModalHidden , setRefresh1} = useContext(childContext)
+    const { setinvModalHidden, setRefresh1 } = useContext(childContext)
     const [barcode, setBarcode] = useState('')
     const socket = io(API_URL)
     const [barcodeMode, setBarcodeMode] = useState(false)
@@ -17,21 +17,35 @@ const AddDrug = () => {
     const [submitting, isSubmitting] = useState(false)
     const [drugName, setDrugName] = useState("");
     const [drugPrice, setDrugPrice] = useState("");
-    const [nameStatus, setnameStatus]=useState("Add")
+    const [nameStatus, setnameStatus] = useState("Add")
     const [manufacturerId, setManufacturerId] = useState("");
+    const [manu_list, setmanu_list] = useState(null)
     const [inStock, setInStock] = useState(0);
     const connectToBarcodeAPI = () => {
-        if(barcodeMode){
+        if (barcodeMode) {
             setBarcodeMode(false)
             setnameStatus("Add")
-        }else{
+        } else {
             setBarcodeMode(true)
             setnameStatus("Awaiting Barcode details....")
         }
-        
+
     }
+    useEffect(() => {
+        const getManu = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/manufacturer/all`)
+                const manus = res.data
+                setmanu_list(manus)
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+        getManu()
+    },[])
     const handleSubmit = async (e) => {
-        if(!drugName && barcodeMode) toast.error('Please select the name received from the dropdown!', {position:'top-center'})
+        if (!drugName && barcodeMode) toast.error('Please select the name received from the dropdown!', { position: 'top-center' })
         e.preventDefault();
         try {
             isSubmitting(true);
@@ -53,15 +67,15 @@ const AddDrug = () => {
             setInStock(0)
             setbarcodeDetails([])
             setnameStatus('Added successfully!')
-            setTimeout(()=>{
+            setTimeout(() => {
                 setnameStatus('Add')
             }, 1000)
-            setRefresh1(prev=>!prev)
+            setRefresh1(prev => !prev)
         } catch (error) {
             console.error('Error:', error);
             isSubmitting(false)
             setnameStatus('Adding failed!')
-        } 
+        }
     }
     const nonBarcodeInput = (
         <div className="mb-4 flex flex-col">
@@ -70,41 +84,41 @@ const AddDrug = () => {
         </div>)
     const barcodeInput = (
         <div className="mb-4 flex flex-col">
-          <label htmlFor="drug_name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Drug Name</label>
-          <select
-            id="drug_name"
-            value={drugName}
-            onChange={(e) => {setDrugName(e.target.value); }}
-            className="shadow-sm rounded-md px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            {barcodeDetails && barcodeDetails.map((bar, index) => (
-              <option key={index} value={bar} onClick={()=>setDrugName(bar)}>
-                {bar}
-              </option>
-            ))}
-          </select>
+            <label htmlFor="drug_name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Drug Name</label>
+            <select
+                id="drug_name"
+                value={drugName}
+                onChange={(e) => { setDrugName(e.target.value); }}
+                className="shadow-sm rounded-md px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+                {barcodeDetails && barcodeDetails.map((bar, index) => (
+                    <option key={index} value={bar} onClick={() => setDrugName(bar)}>
+                        {bar}
+                    </option>
+                ))}
+            </select>
         </div>
-      );
-      
-      const handleBarcodeDetails = useCallback((details) => {
+    );
+
+    const handleBarcodeDetails = useCallback((details) => {
         console.log(details);
         setBarcode(details.message);
-        if (details.variants===null) toast.error("Oops didn't receive drug name, you might want to set it manually", {position:'top-center'})
+        if (details.variants === null) toast.error("Oops didn't receive drug name, you might want to set it manually", { position: 'top-center' })
         setbarcodeDetails(details.variants);
         setnameStatus("Received barcode details...")
-        setTimeout(()=>{
+        setTimeout(() => {
             setnameStatus('Add')
         }, 1000)
-      }, []);
-    
-      useEffect(() => {
+    }, []);
+
+    useEffect(() => {
         socket.emit('joinRoom', 'receiver'); // Join the room as a receiver
         socket.on('obtainedBarcodeDetails', handleBarcodeDetails);
-    
+
         return () => {
-          socket.off('obtainedBarcodeDetails', handleBarcodeDetails);
+            socket.off('obtainedBarcodeDetails', handleBarcodeDetails);
         };
-      }, []);
+    }, []);
 
 
     return (
@@ -113,7 +127,7 @@ const AddDrug = () => {
                 <FontAwesomeIcon icon={faTimes} size='xl' className='absolute right-6 cursor-pointer' onClick={() => setinvModalHidden(true)} />
                 <h1 className="text-2xl font-bold text-left mb-4 dark:text-gray-200">Add Drug</h1>
                 <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-4'>
-                    {barcodeMode?barcodeInput:nonBarcodeInput}
+                    {barcodeMode ? barcodeInput : nonBarcodeInput}
                     <div className="mb-4 flex flex-col">
                         <label htmlFor="drugprice" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Drug price</label>
                         <input type="text" id="drugprice" value={drugPrice} onChange={(e) => setDrugPrice(e.target.value)} className="shadow-sm rounded-md px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required />
@@ -121,9 +135,11 @@ const AddDrug = () => {
                     <div className="mb-4 flex flex-col">
                         <label htmlFor="manufacturer_id" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Supplier</label>
                         <select id="manufacturer_id" value={manufacturerId} onChange={(e) => setManufacturerId(e.target.value)} className="shadow-sm rounded-md px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
-                            <option value="None" >None</option>
-                            <option value="manufacturer1">Manufacturer 1</option>
-                            <option value="manufacturer2">Manufacturer 2</option>
+                            {manu_list && manu_list.map((manu, index) => (
+                                <option key={index} value={manu._id} onClick={() => setManufacturerId(manu._id)}>
+                                    {manu.man_name}
+                                </option>
+                            ))}
                         </select>
 
                     </div>

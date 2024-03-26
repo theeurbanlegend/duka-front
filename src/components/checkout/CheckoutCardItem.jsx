@@ -10,15 +10,20 @@ const CheckoutCardItem = ({drugId, drugName, drugPrice, inStock, updateItem}) =>
     const handleSaveOrEdit=()=>{
         if(editing){
             isEditing(false)
-            updateItem({drugId,unitsToCheckout:Number(unitsToCheckout), checkout:Number(checkout)})
+            updateItem({drugId,unitsToCheckout:Number(unitsToCheckout),unitPrice,  checkout:Number(checkout)})
         }
         else{
             isEditing(true)
         }
     }
-    const handleCheckNumUpdate=(value)=>{
+    const handleUnitsChange=(value)=>{
         setUnitsToCheckout(value)
         const total=Number(value)*Number(unitPrice)
+        setCheckout(total)
+    }
+    const handleUnitPriceChange=(value)=>{
+        setUnitPrice(value)
+        const total=Number(value)*Number(unitsToCheckout)
         setCheckout(total)
     }
     return (
@@ -31,19 +36,17 @@ const CheckoutCardItem = ({drugId, drugName, drugPrice, inStock, updateItem}) =>
                     <h6 className="font-semibold uppercase text-gray-600">{drugName}</h6>
                     {!editing?<p className="text-gray-400">x {unitsToCheckout}</p>:<input
                     value={unitsToCheckout}
-                    onChange={(e)=>handleCheckNumUpdate(e.target.value)}
+                    onChange={(e)=>handleUnitsChange(e.target.value)}
                     />}
                 </div>
                 <div className='mr-10'>
-                    <span className="font-semibold text-gray-600 text-xl">{unitPrice}</span><span className="font-semibold text-gray-600 text-sm">.00</span>
+                {editing?
+                    <input type='text' accept='number' value={unitPrice} 
+                    onInput={(e)=>handleUnitPriceChange(e.target.value)}
+                    className="font-semibold text-right text-gray-600 text-xl w-10"/>:<span className="font-semibold text-gray-600 text-xl">{unitPrice}</span>}<span className="font-semibold text-gray-600 text-sm">.00</span>
                 </div>
-                <div className='mr-10'>
-                    {editing?
-                    <input type='number' accept='number' value={checkout} 
-                    onInput={(e)=>setCheckout(e.target.value)}
-                    className="font-semibold text-right text-gray-600 text-xl w-10"/>:
-               
-                    <span className="font-semibold text-gray-600 text-xl">{checkout}</span>}
+                <div className='mr-10'>              
+                    <span className="font-semibold text-gray-600 text-xl">{checkout}</span>
                     <span className="font-semibold text-gray-600 text-sm">.00</span>
                 </div>
             </div>

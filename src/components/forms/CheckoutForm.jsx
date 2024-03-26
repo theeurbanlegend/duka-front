@@ -44,14 +44,13 @@ const CheckoutForm = () => {
 
     try {
       const res = await axios.post(`${API_URL}/drug/checkout`, data)
-      console.log(res.data)
       setCheckoutCardList([])
       setDrugSelected(null)
       setProfit(0)
       setcheckoutTotal(0)
       isSubmitting(false)
       setStatus("TRANSACTION SUCCESS")
-      setTimeout(() => { navigate("/dash") }, 1000)
+      setTimeout(() => { setStatus("PERFORM CHECKOUT") }, 1000)
     } catch (err) {
       isSubmitting(false)
       setStatus("AN ERROR OCCURED")
@@ -66,7 +65,8 @@ const CheckoutForm = () => {
     if (exists) {
       setCheckoutCardList(prevList => prevList.map(item => {
         if (item._id === details.drugId) {
-          const { unitsToCheckout, checkout } = details
+          const { unitsToCheckout, unitPrice,checkout } = details
+          item.sell_price=Number(unitPrice)
           item.stock_out = item.in_stock - unitsToCheckout
           item.profit = checkout - Number(item.item_price)
           item.checkout_price = checkout
@@ -81,6 +81,7 @@ const CheckoutForm = () => {
       const exists = checkoutCardList.length > 0 && checkoutCardList.some(item => item._id === drugSelected._id);
       if (!exists && drugSelected) {
         const { _id, item_name, item_price, barcode_no, in_stock } = drugSelected
+        drugSelected['sell_price']=item_price
         drugSelected['stock_out'] = in_stock - 1
         drugSelected['item_affected'] = _id
         drugSelected['profit'] = 0
