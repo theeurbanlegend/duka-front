@@ -18,7 +18,7 @@ const AddDrug = () => {
     const [drugName, setDrugName] = useState("");
     const [drugPrice, setDrugPrice] = useState("");
     const [nameStatus, setnameStatus] = useState("Add")
-    const [manufacturerId, setManufacturerId] = useState("");
+    const [manufacturerId, setManufacturerId] = useState(null);
     const [manu_list, setmanu_list] = useState(null)
     const [inStock, setInStock] = useState(0);
     const connectToBarcodeAPI = () => {
@@ -46,6 +46,7 @@ const AddDrug = () => {
     },[])
     const handleSubmit = async (e) => {
         if (!drugName && barcodeMode) toast.error('Please select the name received from the dropdown!', { position: 'top-center' })
+        if(!manufacturerId) toast.error('Please select the supplier!')
         e.preventDefault();
         try {
             isSubmitting(true);
@@ -54,9 +55,9 @@ const AddDrug = () => {
                 item_name: drugName,
                 item_price: drugPrice,
                 in_stock: Number(inStock),
-                barcode_no: barcode
+                barcode_no: barcode,
+                manufacturer_id:manufacturerId
             }
-            if (!manufacturerId === "None") data[manufacturerId] = manufacturerId
             if (!barcodeMode) delete data.barcode_no
             const response = await axios.post(`${API_URL}/drug/add`, data);
             isSubmitting(false)
@@ -101,7 +102,6 @@ const AddDrug = () => {
     );
 
     const handleBarcodeDetails = useCallback((details) => {
-        console.log(details);
         setBarcode(details.message);
         if (details.variants === null) toast.error("Oops didn't receive drug name, you might want to set it manually", { position: 'top-center' })
         setbarcodeDetails(details.variants);

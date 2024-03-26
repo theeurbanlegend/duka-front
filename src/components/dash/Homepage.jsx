@@ -6,7 +6,6 @@ import { childContext } from '../../App'
 
 const Homepage = () => {
     const {currentChild, setCurrentChild}=useContext(childContext)
-    
     return (
         <div className="min-h-full">
             <Navbar />

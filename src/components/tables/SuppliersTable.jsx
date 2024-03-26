@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import BarLoader from './BarLoader'
 
-const SuppliersTable = ({suppliers}) => {
+const SuppliersTable = ({suppliers, isOpenSupplierModal}) => {
   return (
     <div className="flex flex-wrap -mx-3 mb-5">
     <div className="w-full max-w-full px-3 mb-6  mx-auto">

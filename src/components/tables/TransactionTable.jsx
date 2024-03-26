@@ -48,7 +48,7 @@ const TransactionTable = ({ txns }) => {
               <tr>
                 <td colSpan={6}>
                   {txns && txns.length === 0 ? (
-                    <div className='text-center'>Add some txns to find them here</div>
+                    <div className='text-center text-black'>Add some txns to find them here</div>
                   ) : (
                     <BarLoader />
                   )}

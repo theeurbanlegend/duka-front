@@ -14,7 +14,6 @@ const Inventory = () => {
       const res = await axios.get(`${API_URL}/drug/all`);
       // Handle successful response
       setDrugs(res.data)
-      console.log(res.data)
       setDrugList(res.data)
       toast.success("Success!", {
         position: "top-center"
