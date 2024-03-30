@@ -1,4 +1,4 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { childContext } from '../../App';
@@ -50,10 +50,10 @@ const AddDrug = () => {
         e.preventDefault();
         try {
             isSubmitting(true);
-            setnameStatus('Adding....')
+            setnameStatus(<FontAwesomeIcon spinPulse icon={faSpinner}/>)
             const data = {
                 item_name: drugName,
-                item_price: drugPrice,
+                retail_price: drugPrice,
                 in_stock: Number(inStock),
                 barcode_no: barcode,
                 manufacturer_id:manufacturerId

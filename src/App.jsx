@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import './App.css'
 import LoginForm from './components/forms/LoginForm'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -8,6 +8,8 @@ import Dashboard from './components/dash/Dashboard'
 import PersistLogin from './components/features/PersistLogin'
 import { Toaster } from 'react-hot-toast'
 import CheckoutForm from './components/forms/CheckoutForm';
+import axios from 'axios';
+import { API_URL } from './config/config';
 
 export const childContext = createContext()
 
@@ -21,8 +23,12 @@ function App() {
   const [refresh2, setRefresh2]=useState(false)
   const [session, setSession] = useState(null)
   const [drugList, setDrugList]=useState([])
+  const [drugToView, setDrugToView]=useState(null)
+  const [supToView, setSupToView]=useState(null)
+  const [txnToView, setTxnToView]=useState(null)
+  
   return (
-    <childContext.Provider value={{ active, setActive, currentChild, setCurrentChild, invModalHidden, setinvModalHidden, supModalHidden, setsupModalHidden, session, setSession , refresh1, setRefresh1, refresh2, setRefresh2, drugList, setDrugList}}>
+    <childContext.Provider value={{ active, setActive, currentChild, setCurrentChild, invModalHidden, setinvModalHidden, supModalHidden, setsupModalHidden, session, setSession , refresh1, setRefresh1, refresh2, setRefresh2, drugList, setDrugList, drugToView, supToView, txnToView, setDrugToView, setSupToView, setTxnToView}}>
       <Router>
         <Routes>
         <Route path='*' element={<LoginForm />} />

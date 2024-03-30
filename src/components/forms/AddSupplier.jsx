@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { childContext } from '../../App';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { API_URL } from '../../config/config';
 
@@ -47,7 +47,7 @@ const AddSupplier = () => {
                         <input type="text" id="man_phone" value={manufacturerPhone} onChange={(e)=>setManufacturerPhone(e.target.value)} className="shadow-sm rounded-md px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required />
                     </div>
                     
-                    <button type="submit" className="col-span-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{submitting?"Adding...":"Add"}</button>
+                    <button type="submit" className="col-span-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{submitting?<FontAwesomeIcon spinPulse icon={faSpinner}/>:"Add"}</button>
                 </form>
             </div>
         </div>

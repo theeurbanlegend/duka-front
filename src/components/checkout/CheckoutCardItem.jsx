@@ -4,13 +4,13 @@ import React, { useState } from 'react'
 
 const CheckoutCardItem = ({drugId, drugName, drugPrice, inStock, updateItem}) => {
     const [unitsToCheckout, setUnitsToCheckout]=useState(1)
-    const [unitPrice, setUnitPrice]=useState(drugPrice)
+    const [unitSellPrice, setUnitSellPrice]=useState(drugPrice)
     const [checkout, setCheckout]=useState(drugPrice)
     const [editing, isEditing]=useState(false)
     const handleSaveOrEdit=()=>{
         if(editing){
             isEditing(false)
-            updateItem({drugId,unitsToCheckout:Number(unitsToCheckout),unitPrice,  checkout:Number(checkout)})
+            updateItem({drugId,unitsToCheckout:Number(unitsToCheckout),unitSellPrice,  checkout:Number(checkout)})
         }
         else{
             isEditing(true)
@@ -18,11 +18,11 @@ const CheckoutCardItem = ({drugId, drugName, drugPrice, inStock, updateItem}) =>
     }
     const handleUnitsChange=(value)=>{
         setUnitsToCheckout(value)
-        const total=Number(value)*Number(unitPrice)
+        const total=Number(value)*Number(unitSellPrice)
         setCheckout(total)
     }
     const handleUnitPriceChange=(value)=>{
-        setUnitPrice(value)
+        setUnitSellPrice(value)
         const total=Number(value)*Number(unitsToCheckout)
         setCheckout(total)
     }
@@ -41,9 +41,9 @@ const CheckoutCardItem = ({drugId, drugName, drugPrice, inStock, updateItem}) =>
                 </div>
                 <div className='mr-10'>
                 {editing?
-                    <input type='text' accept='number' value={unitPrice} 
+                    <input type='text' accept='number' value={unitSellPrice} 
                     onInput={(e)=>handleUnitPriceChange(e.target.value)}
-                    className="font-semibold text-right text-gray-600 text-xl w-10"/>:<span className="font-semibold text-gray-600 text-xl">{unitPrice}</span>}<span className="font-semibold text-gray-600 text-sm">.00</span>
+                    className="font-semibold text-right text-gray-600 text-xl w-10"/>:<span className="font-semibold text-gray-600 text-xl">{unitSellPrice}</span>}<span className="font-semibold text-gray-600 text-sm">.00</span>
                 </div>
                 <div className='mr-10'>              
                     <span className="font-semibold text-gray-600 text-xl">{checkout}</span>

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { childContext } from '../../App';
 import { API_URL } from '../../config/config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBarsProgress, faRecycle, faSpinner, faTruckLoading } from '@fortawesome/free-solid-svg-icons';
 
 const SignUpForm = () => {
     const [name, setName] = useState('');
@@ -77,7 +79,9 @@ const SignUpForm = () => {
                         </div>
                         <a href="/login" className="text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</a>
                     </div>
-                    <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{!submit?"Sign up":"Signing you in..."}</button>
+                    <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        {submit?<FontAwesomeIcon spinPulse icon={faSpinner}/>:"Sign up"}
+                    </button>
                 </form>
             </div>
         </div>

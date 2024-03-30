@@ -47,7 +47,7 @@ const CheckoutList = ({setisAdding, setDrugSelected}) => {
                   </div>
 
                   <div >
-                    <span className="font-semibold text-gray-600 ">Ksh {drug.item_price}</span><span className="font-semibold text-gray-600 text-sm">.00</span>
+                    <span className="font-semibold text-gray-600 ">Ksh {drug.selling_price}</span><span className="font-semibold text-gray-600 text-sm">.00</span>
                   </div>
                 </div>
               </div>

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import BarLoader from './BarLoader'
 
-const InventoryTable = ({drugs}) => {
+const InventoryTable = ({drugs, handleDrugSelected}) => {
   return (
     <div className="flex flex-wrap -mx-3 mb-5">
     <div className="w-full max-w-full px-3 mb-6  mx-auto">
@@ -41,7 +41,7 @@ const InventoryTable = ({drugs}) => {
                     </td>
                     <td className="p-3 pr-0 text-end">
                       <span className="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
-                       Ksh {drug.item_price} </span>
+                       Ksh {drug.retail_price} </span>
                     </td>
                     <td className="p-3 pr-12 text-end">
                       <span className="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg">{drug.in_stock}</span>
@@ -50,7 +50,7 @@ const InventoryTable = ({drugs}) => {
                       <span className="font-semibold text-light-inverse text-md/normal">{new Date(drug.createdAt).toDateString()}</span>
                     </td>
                     <td className="p-1 pr-0 text-end">
-                      <button className="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center">
+                      <button className="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center" onClick={()=>handleDrugSelected(drug)}>
                         <span className="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

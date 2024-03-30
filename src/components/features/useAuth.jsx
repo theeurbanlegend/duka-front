@@ -4,9 +4,8 @@ const useAuth = (session) => {
   try {
    
       const decoded = jwtDecode(session)
-      const { username, phone } = decoded
-
-      return {username, phone};
+      const {sub, username, phone } = decoded
+      return {sub,username, phone};
     
   } catch (error) {
     console.error('Error decoding token:', error);
