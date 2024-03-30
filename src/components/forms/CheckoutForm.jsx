@@ -130,6 +130,7 @@ const CheckoutForm = () => {
       isSubmitting(false)
       setStatus("TRANSACTION SUCCESS")
       setTimeout(() => { setStatus("PERFORM CHECKOUT") }, 1000)
+      setTransaction(null)
     } catch (err) {
       isSubmitting(false)
       setStatus('ERROR ADDING..')
