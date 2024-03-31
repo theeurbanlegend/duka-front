@@ -8,9 +8,8 @@ import { API_URL } from '../../config/config'
 import DrugDetailsCard from '../details/DrugDetailsCard'
 
 const Inventory = () => {
-  const { invModalHidden, refresh1, setDrugList } = useContext(childContext)
+  const { invModalHidden, refresh1,setRefresh1, setDrugList , drugToView, setDrugToView} = useContext(childContext)
   const [drugs, setDrugs] = useState(null)
-  const [drugSelected, setDrugSelected] = useState(null)
   useEffect(() => {
     async function getDrugs() {
       try {
@@ -47,14 +46,14 @@ const Inventory = () => {
   }, [refresh1])
   return (
     <>
-      <InventoryTable drugs={drugs} handleDrugSelected={setDrugSelected} />
+      <InventoryTable drugs={drugs} handleDrugSelected={setDrugToView} />
       {!invModalHidden &&
         <div className='fixed top-[4%] left-[21%] lg:top-[5%] lg:left-[35%]'>
           <AddDrug />
         </div>}
-      {drugSelected&&
+      {drugToView&&
         <div className='fixed top-[4%] left-[21%] lg:top-[5%] lg:left-[35%]'>
-          <DrugDetailsCard drugSelected={drugSelected} setDrugSelected={setDrugSelected}/>
+          <DrugDetailsCard drugSelected={drugToView} setDrugSelected={setDrugToView} setrefresh={setRefresh1}/>
 
         </div>
       }

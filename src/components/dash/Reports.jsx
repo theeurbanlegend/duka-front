@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import TransactionTable from '../tables/TransactionTable'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { API_URL } from '../../config/config'
+import { childContext } from '../../App'
+import TransactionDetailsCard from '../details/TxnDetailsCard'
 
 const Reports = () => {
   const [txns, setTxns] = useState(null)
+  const {txnToView, setTxnToView}=useContext(childContext)
   useEffect(() => {
     async function getTxns() {
       try {
@@ -42,8 +45,13 @@ const Reports = () => {
   return (
     <div>
       
-      <TransactionTable txns={txns}/>
-      
+      <TransactionTable txns={txns} setTxnSelected={setTxnToView}/>
+      {txnToView&&
+        <div className='fixed top-[4%] left-[21%] lg:top-[5%] lg:left-[35%]'>
+          <TransactionDetailsCard transaction={txnToView} setTxnSelected={setTxnToView} />
+
+        </div>
+      }
       
     </div>
 

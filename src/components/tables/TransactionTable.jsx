@@ -1,7 +1,7 @@
 import React from 'react';
 import BarLoader from './BarLoader';
 
-const TransactionTable = ({ txns }) => {
+const TransactionTable = ({ txns, setTxnSelected }) => {
   return (
     <div className='flex-col items-top justify-center min-h-screen from-purple-200 via-purple-300 to-purple-500 bg-gradient-to-br '>
       <div className="flex-col items-top justify-center w-full overflow-x-auto">
@@ -23,7 +23,7 @@ const TransactionTable = ({ txns }) => {
             {txns && txns.length > 0 ? (
               txns.map((txn) => (
                 <tr key={txn._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <td className="py-4 px-6">{txn._id}</td>
+                  <td onClick={()=>setTxnSelected(txn)} className="py-4 px-6 text-teal-500 cursor-pointer">{txn._id}</td>
                   <td className="py-4 px-6">
                     {txn.tx_details.map((detail, index) => (
                       <span key={index}>

@@ -60,9 +60,9 @@ const CheckoutForm = () => {
     setStatus(<FontAwesomeIcon spinPulse icon={faSpinner} />)
     let total = 0
     const tx_details_list = checkoutCardList.map(item => {
-      const { item_affected, in_stock, stock_out, profit, checkout_price } = item;
+      const { item_affected, in_stock, stock_out, profit,retail_price, checkout_price, selling_price } = item;
       total += Number(checkout_price)
-      return { item_affected, stock_in: in_stock, stock_out, profit };
+      return { item_affected, stock_in: in_stock,selling_price,retail:retail_price, stock_out, profit };
     });
     const data = {
       tx_type: 'checkout',
@@ -99,9 +99,9 @@ const CheckoutForm = () => {
     
     let total = 0
     const tx_details_list = checkoutCardList.map(item => {
-      const { item_affected, in_stock, stock_out, profit, checkout_price } = item;
+      const { item_affected, in_stock, stock_out,retail_price,selling_price, profit, checkout_price } = item;
       total += Number(checkout_price)
-      return { item_affected, stock_in: in_stock, stock_out, profit };
+      return { item_affected, stock_in: in_stock,selling_price,retail:retail_price, stock_out, profit };
     });
     const { TransID, TransactionType, FirstName, MiddleName, TransAmount,LastName, TransTime, MSISDN } = transaction;
     const data = {
@@ -145,9 +145,9 @@ const CheckoutForm = () => {
       setCheckoutCardList(prevList => prevList.map(item => {
         if (item._id === details.drugId) {
           const { unitsToCheckout, unitSellPrice, checkout } = details
-          item.sell_price = Number(unitSellPrice)
+          item.selling_price = Number(unitSellPrice)
           item.stock_out = item.in_stock - unitsToCheckout
-          item.profit = checkout - (Number(item.sell_price) * unitsToCheckout)
+          item.profit = checkout - (Number(item.retail_price) * unitsToCheckout)
           item.checkout_price = checkout
         }
         return item;
@@ -158,11 +158,11 @@ const CheckoutForm = () => {
     const addToList = () => {
       const exists = checkoutCardList.length > 0 && checkoutCardList.some(item => item._id === drugSelected._id);
       if (!exists && drugSelected) {
-        const { _id, item_name, retail_price, barcode_no, in_stock } = drugSelected
+        const { _id, item_name, selling_price, barcode_no, in_stock } = drugSelected
         drugSelected['stock_out'] = in_stock - 1
         drugSelected['item_affected'] = _id
         drugSelected['profit'] = 0
-        drugSelected['checkout_price'] = retail_price
+        drugSelected['checkout_price'] = selling_price
         setCheckoutCardList(prevList => [...prevList, drugSelected]);
       }
     };
@@ -176,7 +176,7 @@ const CheckoutForm = () => {
         let profit = 0;
         let checkout = 0;
         for (const item of checkoutCardList) {
-          total += Number(item.retail_price)
+          total += Number(item.selling_price)
           profit += Number(item.profit)
           checkout += Number(item.checkout_price)
         }

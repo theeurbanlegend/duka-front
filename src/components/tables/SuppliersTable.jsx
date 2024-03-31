@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import BarLoader from './BarLoader'
 
-const SuppliersTable = ({suppliers, isOpenSupplierModal}) => {
+const SuppliersTable = ({suppliers, setsupSelected}) => {
   return (
     <div className="flex flex-wrap -mx-3 mb-5">
     <div className="w-full max-w-full px-3 mb-6  mx-auto">
@@ -37,7 +37,7 @@ const SuppliersTable = ({suppliers, isOpenSupplierModal}) => {
                     </td>
                     
                     <td className="p-3 pr-0 text-end">
-                      <button className="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center">
+                      <button onClick={()=>setsupSelected(sup)} className="ml-auto relative text-secondary-dark bg-light-dark hover:text-primary flex items-center h-[25px] w-[25px] text-base font-medium leading-normal text-center align-middle cursor-pointer rounded-2xl transition-colors duration-200 ease-in-out shadow-none border-0 justify-center">
                         <span className="flex items-center justify-center p-0 m-0 leading-none shrink-0 ">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
