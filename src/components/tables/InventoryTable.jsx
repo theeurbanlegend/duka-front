@@ -1,14 +1,29 @@
-import { faCapsules } from '@fortawesome/free-solid-svg-icons'
+import { faCapsules, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useState } from 'react'
 import BarLoader from './BarLoader'
 
 const InventoryTable = ({drugs, handleDrugSelected}) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredDrugs = drugs && drugs.filter(drug =>
+    drug.item_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div className="flex flex-wrap -mx-3 mb-5">
     <div className="w-full max-w-full px-3 mb-6  mx-auto">
       <div className="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
-        <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">    
+        <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">  
+        <div className="flex items-center mb-3 py-2 px-3 w-full border  rounded-md focus:outline-none focus:ring focus:ring-indigo-200">
+              <FontAwesomeIcon icon={faSearch} className="mr-2 text-gray-500" />
+              <input
+                type="text"
+                placeholder="Search by drug name"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full h-full"
+              />
+            </div>
           <div className="flex-auto block py-8 pt-6 px-9">
             <div className="overflow-x-auto">
               <table className="w-full my-0 align-middle text-dark border-neutral-200">
@@ -23,7 +38,7 @@ const InventoryTable = ({drugs, handleDrugSelected}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {drugs&&drugs.length>0 ? (drugs.map(
+                  {filteredDrugs&&filteredDrugs.length>0 ? (filteredDrugs.map(
                     (drug)=>(
                   <tr key={drug._id} className="border-b border-dashed last:border-b-0">
                     <td className="p-3 pl-0">
@@ -63,7 +78,7 @@ const InventoryTable = ({drugs, handleDrugSelected}) => {
                   )):(
                     <tr>
                       <td colSpan={6}>
-                        {drugs && drugs.length === 0 ? (
+                        {filteredDrugs && filteredDrugs.length === 0 ? (
                           <div className='text-center'>Add some drugs to find them here</div>
                         ) : (
                           <BarLoader />
